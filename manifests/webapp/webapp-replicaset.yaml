@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: webapp-rs
+  namespace: webapp-ns
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: 537380924761.dkr.ecr.us-east-1.amazonaws.com/webapp-repo:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DBHOST
+          value: "mysql-service.mysql-ns.svc.cluster.local"
+        - name: DBUSER
+          value: "root"
+        - name: DBPWD
+          value: "rootpass"
+        - name: DBPORT
+          value: "3306"
+        - name: DBNAME
+          value: "employees"
+      imagePullSecrets:
+      - name: ecr-creds
