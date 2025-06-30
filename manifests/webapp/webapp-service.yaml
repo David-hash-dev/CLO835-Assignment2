@@ -4,10 +4,11 @@ metadata:
   name: webapp-service
   namespace: webapp-ns
 spec:
-  type: NodePort
   selector:
-    app: webapp
+    app: employees
+  type: NodePort
   ports:
-  - port: 8080
-    targetPort: 8080
-    nodePort: 30080
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30000
